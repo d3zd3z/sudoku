@@ -1,9 +1,7 @@
 -- Solvers for the exact cover problem.
 
 module Cover (
-   Column(..),
-   Board,
-   makeColumn,
+   module Cover.Types,
 
    pureSolve
 ) where
@@ -12,13 +10,7 @@ import Data.List (partition, sortBy)
 import Data.Ord (comparing)
 import qualified Data.Set as Set
 
-data Column a = Column { colName :: String, columnSize :: !Int, colRows :: [a] }
-   deriving (Eq, Show)
-
-type Board = [Column Int]
-
-makeColumn :: String -> [a] -> Column a
-makeColumn name rows = Column name (length rows) rows
+import Cover.Types
 
 ----------------------------------------------------------------------
 -- Although Knuth's DLX implements Algorithm X using mutable state,
