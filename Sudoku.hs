@@ -4,7 +4,8 @@ module Sudoku (
    readBoards,
    runSolver,
 
-   module Sudoku.Simple
+   module Sudoku.Simple,
+   module Sudoku.Cover
 ) where
 
 import Control.Arrow (second)
@@ -13,6 +14,7 @@ import Data.List (intercalate)
 
 import Sudoku.Internal
 import Sudoku.Simple
+import Sudoku.Cover
 
 -- Project Euler, problem 96, has a set of sudoku problems in a simple
 -- text file.  After converting to local line-ending format, this will

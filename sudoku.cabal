@@ -47,7 +47,8 @@ Executable sudoku
   -- Packages needed in order to build this package.
   Build-depends:
     base >= 4.0 && < 5.0,
-    array >= 0.3 && < 0.4
+    array >= 0.3 && < 0.4,
+    containers >= 0.4 && < 0.5
 
   ghc-options: -Wall -rtsopts
 
