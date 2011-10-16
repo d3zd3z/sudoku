@@ -6,7 +6,7 @@ module Sudoku.Simple (
 ) where
 
 import Data.Bits
-import Data.List (foldl', intercalate, minimumBy)
+import Data.List (foldl', minimumBy)
 import Data.Ord (comparing)
 import qualified Data.Array as A
 
@@ -131,14 +131,7 @@ isSolved = all ((/= impossible) . singular) . A.elems
 -- If isSolved is true, return the solution as a string.
 getSolution :: FullBoard -> String
 getSolution board =
-   let nums = map solvedPlace $ A.elems board in
-   intercalate "\n" $ splitUp boardSize nums
-
--- Utility, split a list into chunks of the given size.
-splitUp :: Int -> [a] -> [[a]]
-splitUp n ary = case splitAt n ary of
-   ([], _) -> []
-   (chunk, rest) -> chunk : splitUp n rest
+   map solvedPlace $ A.elems board
 
 -- Convert a possible value back to a character for display.  This is
 -- essential the inverse of 'singlePiece'.
@@ -146,7 +139,6 @@ solvedPlace :: Possible -> Char
 solvedPlace pos = case possibleToList pos of
    [a] -> head $ show a
    _ -> error "Call to solvedPlace on unsolved board"
-
 
 ----------------------------------------------------------------------
 -- Representing the possible values.

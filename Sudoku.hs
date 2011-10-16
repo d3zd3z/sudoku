@@ -33,4 +33,11 @@ runSolver solve = do
    boards <- readBoards "sudoku.txt"
    forM_ (map (second solve) boards) $ \(name, solves) -> do
       putStrLn name
-      putStrLn $ intercalate "---\n" solves ++ "\n---"
+      let solves' = map (intercalate "\n" . splitUp boardSize) solves
+      putStrLn $ intercalate "\n---\n" solves' ++ "\n---"
+
+-- Utility, split a list into chunks of the given size.
+splitUp :: Int -> [a] -> [[a]]
+splitUp n ary = case splitAt n ary of
+   ([], _) -> []
+   (chunk, rest) -> chunk : splitUp n rest
