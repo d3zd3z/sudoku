@@ -30,4 +30,5 @@ usage = do
 solvers :: Map String (String -> [String])
 solvers = Map.fromList [
    ("simple", simpleSolver),
-   ("pureCover", pureCoverSolver) ]
+   ("pureCover", pureCoverSolver),
+   ("fastPureCover", fastPureCoverSolver) ]

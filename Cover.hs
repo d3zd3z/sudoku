@@ -3,7 +3,8 @@
 module Cover (
    module Cover.Types,
 
-   pureSolve
+   pureSolve,
+   fastPureSolve
 ) where
 
 import Data.List (partition, sortBy)
@@ -11,6 +12,7 @@ import Data.Ord (comparing)
 import qualified Data.Set as Set
 
 import Cover.Types
+import Cover.FastPure
 
 ----------------------------------------------------------------------
 -- Although Knuth's DLX implements Algorithm X using mutable state,

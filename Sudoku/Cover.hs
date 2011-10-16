@@ -1,13 +1,14 @@
 ----------------------------------------------------------------------
 
 module Sudoku.Cover (
-   pureCoverSolver
+   pureCoverSolver,
+   fastPureCoverSolver
 ) where
 
 import Data.List (sort)
 import Data.Maybe (catMaybes)
 
-import Cover (makeColumn, Column, pureSolve)
+import Cover (makeColumn, Column, fastPureSolve, pureSolve)
 import Sudoku.Internal
 
 -- Use 10s to make the rows easy to read.  To solve bigger puzzles,
@@ -68,3 +69,6 @@ answerToBoard = concatMap decodeRow . sort where
 
 pureCoverSolver :: String -> [String]
 pureCoverSolver board = map answerToBoard $ pureSolve $ boardConstraints blockSize ++ givenConstraints board
+
+fastPureCoverSolver :: String -> [String]
+fastPureCoverSolver board = map answerToBoard $ fastPureSolve $ boardConstraints blockSize ++ givenConstraints board
