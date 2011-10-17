@@ -2,6 +2,8 @@
 
 module Sudoku.Simple (
    simpleSolver,
+
+   toFullBoard,
    possibleFromList  -- For Read notation.
 ) where
 

@@ -31,4 +31,5 @@ solvers :: Map String (String -> [String])
 solvers = Map.fromList [
    ("simple", simpleSolver),
    ("pureCover", pureCoverSolver),
-   ("fastPureCover", fastPureCoverSolver) ]
+   ("fastPureCover", fastPureCoverSolver),
+   ("dlx", dlxSolver) ]

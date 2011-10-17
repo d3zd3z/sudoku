@@ -2,13 +2,17 @@
 
 module Sudoku.Cover (
    pureCoverSolver,
-   fastPureCoverSolver
+   fastPureCoverSolver,
+   dlxSolver,
+
+   boardConstraints,
+   givenConstraints
 ) where
 
 import Data.List (sort)
 import Data.Maybe (catMaybes)
 
-import Cover (makeColumn, Column, fastPureSolve, pureSolve)
+import Cover (makeColumn, Column, fastPureSolve, pureSolve, dlxSolve)
 import Sudoku.Internal
 
 -- Use 10s to make the rows easy to read.  To solve bigger puzzles,
@@ -68,7 +72,13 @@ answerToBoard = concatMap decodeRow . sort where
    decodeRow row = let (_, _, piece) = unmakeRow row in show piece
 
 pureCoverSolver :: String -> [String]
-pureCoverSolver board = map answerToBoard $ pureSolve $ boardConstraints blockSize ++ givenConstraints board
+pureCoverSolver = solver pureSolve
 
 fastPureCoverSolver :: String -> [String]
-fastPureCoverSolver board = map answerToBoard $ fastPureSolve $ boardConstraints blockSize ++ givenConstraints board
+fastPureCoverSolver = solver fastPureSolve
+
+dlxSolver :: String -> [String]
+dlxSolver = solver dlxSolve
+
+solver :: ([Column Int] -> [[Int]]) -> String -> [String]
+solver kind board = map answerToBoard $ kind $ boardConstraints blockSize ++ givenConstraints board

@@ -4,6 +4,8 @@ module Sudoku (
    readBoards,
    runSolver,
 
+   testBoard,
+
    module Sudoku.Simple,
    module Sudoku.Cover
 ) where
@@ -41,3 +43,8 @@ splitUp :: Int -> [a] -> [[a]]
 splitUp n ary = case splitAt n ary of
    ([], _) -> []
    (chunk, rest) -> chunk : splitUp n rest
+
+testBoard :: IO String
+testBoard = do
+   boards <- readBoards "sudoku.txt"
+   return $! snd $ head boards
