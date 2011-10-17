@@ -236,9 +236,6 @@ adjustSize c _ = error $ "DLX internal error, expecting an inner node: " ++ show
 -- DLX "Cover" of a column
 cover :: Show a => OneCell s a -> ST s ()
 cover header = do
-   case header of
-      (Cell (Header {}) _ _) -> return ()
-      n -> error $ "cover not called on header: " ++ show n
    deleteD $ cellH header
    colNodes <- toListD' $ cellV header
    forM_ colNodes $ \row -> do
@@ -250,9 +247,6 @@ cover header = do
 -- DLX "Uncover".  Inverts the 'cover' operation.
 uncover :: Show a => OneCell s a -> ST s ()
 uncover header = do
-   case header of
-      (Cell (Header {}) _ _) -> return ()
-      n -> error $ "cover not called on header: " ++ show n
    colNodes <- reverse <$> (toListD' $ cellV header)
    forM_ colNodes $ \row -> do
       rowNodes <- reverse <$> (toListD' $ cellH row)
