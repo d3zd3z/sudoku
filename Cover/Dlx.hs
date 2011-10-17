@@ -9,8 +9,7 @@ module Cover.Dlx (
 import Control.Applicative ((<$>))
 import Control.Monad (forM, forM_, zipWithM_)
 import Control.Monad.ST
-import Data.List (sort, sortBy)
-import Data.Ord (comparing)
+import Data.List (sort)
 import Data.STRef
 import System.IO.Unsafe
 import qualified Data.Map as Map
@@ -217,10 +216,16 @@ bestColumn :: OneCell s a -> ST s (BestResult s a)
 bestColumn root = do
    cols <- tail <$> (toListD $ cellH root)
    sizes <- mapM (readSTRef . hdSize . cellInfo) cols
-   return $ case sortBy (comparing fst) $ zip sizes cols of
+   return $ case zip sizes cols of
       [] -> BestSolved
-      ((0, _) : _) -> BestDeadEnd
-      ((_, col) : _) -> BestColumn col
+      (a:as) -> scanBest a as
+   where
+      scanBest :: (Int, OneCell s a) -> [(Int, OneCell s a)] -> BestResult s a
+      scanBest (0, _) _ = BestDeadEnd
+      scanBest (_, a) [] = BestColumn a
+      scanBest a@(asz, _) (b@(bsz, _) : rst)
+         | asz <= bsz  = scanBest a rst
+         | otherwise  = scanBest b rst
 
 -- Adjust the 'count' of the column containing the specified inner
 -- node.  Adds the factor to the count.
